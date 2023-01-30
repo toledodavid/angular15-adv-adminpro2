@@ -2,9 +2,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
+import { NotpagefoundComponent } from "./notpagefound/notpagefound.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { Graph1Component } from "./pages/graph1/graph1.component";
-import { NotpagefoundComponent } from "./pages/notpagefound/notpagefound.component";
 import { PagesComponent } from "./pages/pages.component";
 import { ProgressComponent } from "./pages/progress/progress.component";
 

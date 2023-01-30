@@ -17,12 +17,6 @@ import { ProgressComponent } from "./progress/progress.component";
     Graph1Component,
     PagesComponent
   ],
-  exports: [
-    DashboardComponent,
-    ProgressComponent,
-    Graph1Component,
-    PagesComponent
-  ],
   imports: [
     CommonModule,
     SharedModule,
