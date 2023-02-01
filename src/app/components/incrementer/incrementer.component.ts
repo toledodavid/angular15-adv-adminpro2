@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 
 @Component({
@@ -8,11 +8,9 @@ import { Component } from "@angular/core";
 
 })
 export class IncrementerComponent {
-  progress: number = 20;
 
-  get progressWithPercentage() {
-    return `${this.progress}%`;
-  }
+  // @Input('p1') progress: number = 20;
+  @Input() progress: number = 20;
 
   changeValue(value: number) {
     if (this.progress >= 100 && value >= 0) {
