@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 
 @Component({
@@ -7,12 +7,17 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   styles: []
 
 })
-export class IncrementerComponent {
+export class IncrementerComponent implements OnInit {
 
-  // @Input('p1') progress: number = 20;
   @Input() progress: number = 0;
+  @Input('btnClass') btnClasses: string = 'btn-primary';
 
   @Output() valueOutput: EventEmitter<number> = new EventEmitter();
+
+
+  ngOnInit() {
+    this.btnClasses = `btn ${this.btnClasses}`;
+  }
 
   changeValue(value: number) {
     if (this.progress >= 100 && value >= 0) {
