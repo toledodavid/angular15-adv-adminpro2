@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 
 @Component({
@@ -10,7 +10,9 @@ import { Component, Input } from "@angular/core";
 export class IncrementerComponent {
 
   // @Input('p1') progress: number = 20;
-  @Input() progress: number = 20;
+  @Input() progress: number = 0;
+
+  @Output() valueOutput: EventEmitter<number> = new EventEmitter();
 
   changeValue(value: number) {
     if (this.progress >= 100 && value >= 0) {
@@ -21,5 +23,7 @@ export class IncrementerComponent {
       value = 0;
     }
     this.progress += value;
+
+    this.valueOutput.emit(this.progress);
   }
 }
