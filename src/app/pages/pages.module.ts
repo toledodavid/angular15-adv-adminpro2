@@ -2,8 +2,6 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
-import { NgChartsModule } from 'ng2-charts';
-
 import { ComponentsModule } from "../components/components.module";
 import { SharedModule } from "../shared/shared.module";
 
@@ -25,8 +23,7 @@ import { ProgressComponent } from "./progress/progress.component";
     CommonModule,
     SharedModule,
     RouterModule,
-    ComponentsModule,
-    NgChartsModule,
+    ComponentsModule
   ]
 })
 export class PagesModule {}
