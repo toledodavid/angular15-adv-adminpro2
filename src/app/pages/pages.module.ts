@@ -10,6 +10,7 @@ import { Graph1Component } from "./graph1/graph1.component";
 import { PagesComponent } from "./pages.component";
 import { ProgressComponent } from "./progress/progress.component";
 import { AccountSettings } from "./account-settings/account-settings.component";
+import { PromisesComponent } from "./promises/promises.component";
 
 
 
@@ -19,7 +20,8 @@ import { AccountSettings } from "./account-settings/account-settings.component";
     ProgressComponent,
     Graph1Component,
     PagesComponent,
-    AccountSettings
+    AccountSettings,
+    PromisesComponent
   ],
   imports: [
     CommonModule,
