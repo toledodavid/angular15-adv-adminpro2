@@ -11,6 +11,7 @@ import { PagesComponent } from "./pages.component";
 import { ProgressComponent } from "./progress/progress.component";
 import { AccountSettings } from "./account-settings/account-settings.component";
 import { PromisesComponent } from "./promises/promises.component";
+import { RxjsComponent } from "./rxjs/rxjs.component";
 
 
 
@@ -21,7 +22,8 @@ import { PromisesComponent } from "./promises/promises.component";
     Graph1Component,
     PagesComponent,
     AccountSettings,
-    PromisesComponent
+    PromisesComponent,
+    RxjsComponent
   ],
   imports: [
     CommonModule,
