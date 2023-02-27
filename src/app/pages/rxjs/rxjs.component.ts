@@ -11,10 +11,24 @@ export class RxjsComponent {
 
   constructor() {
 
+    // -------- DEPRECATED -------------
+    // ob$.subscribe(
+    //   value => console.log('Subs: ', value),
+    //   error => console.warn(error),
+    //   () => console.info('Obs finished')
+    // );
 
-    const ob$ = new Observable(observer => {
+    this.returnsObservable().pipe(retry(2)).subscribe({
+      next: value => console.log('Subs: ', value),
+      error: error => console.warn(error),
+      complete: () => console.info('Obs finished')
+    });
+  }
 
-      let i = -1;
+  returnsObservable() {
+    let i = -1;
+
+    const ob$ = new Observable<number>(observer => {
 
       const interval = setInterval(() => {
         i++;
@@ -31,18 +45,7 @@ export class RxjsComponent {
       }, 1000);
     });
 
-    // -------- DEPRECATED -------------
-    // ob$.subscribe(
-    //   value => console.log('Subs: ', value),
-    //   error => console.warn(error),
-    //   () => console.info('Obs finished')
-    // );
-
-    ob$.pipe(retry(2)).subscribe({
-      next: value => console.log('Subs: ', value),
-      error: error => console.warn(error),
-      complete: () => console.info('Obs finished')
-    });
+    return ob$;
   }
 
 }
