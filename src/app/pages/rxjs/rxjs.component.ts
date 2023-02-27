@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, retry } from "rxjs";
 
 
 @Component({
@@ -10,6 +10,8 @@ import { Observable } from "rxjs";
 export class RxjsComponent {
 
   constructor() {
+
+
     const ob$ = new Observable(observer => {
 
       let i = -1;
@@ -36,7 +38,7 @@ export class RxjsComponent {
     //   () => console.info('Obs finished')
     // );
 
-    ob$.subscribe({
+    ob$.pipe(retry(2)).subscribe({
       next: value => console.log('Subs: ', value),
       error: error => console.warn(error),
       complete: () => console.info('Obs finished')
