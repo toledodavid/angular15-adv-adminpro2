@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -20,16 +21,19 @@ export class RegisterComponent {
     validators: this.equalPasswords('password', 'password2')
   });
 
-  constructor(private formBuilder: FormBuilder){}
+  constructor(private formBuilder: FormBuilder, private userService: UserService){}
 
   createUser() {
     this.formSubmitted = true;
 
     if (this.registerForm.valid && this.registerForm.get('terms')?.value) {
-      console.log('Posting form');
-      console.log(this.registerForm.value);
+      this.userService.createUser(this.registerForm.value).subscribe(response => {
+        console.log(response);
+      }, ({error}) => {
+         console.warn(error.message);
+      });
     } else {
-      console.log('Invalid form');
+      return;
     }
   }
 
