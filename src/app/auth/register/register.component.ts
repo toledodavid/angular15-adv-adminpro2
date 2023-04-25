@@ -29,10 +29,13 @@ export class RegisterComponent {
     this.formSubmitted = true;
 
     if (this.registerForm.valid && this.registerForm.get('terms')?.value) {
-      this.userService.createUser(this.registerForm.value).subscribe(response => {
-        console.log(response);
-      }, ({error}) => {
-         Swal.fire('Error', error.message, 'error');
+      this.userService.createUser(this.registerForm.value).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: ({error}) => {
+          Swal.fire('Error', error.message, 'error');
+        }
       });
     } else {
       return;
