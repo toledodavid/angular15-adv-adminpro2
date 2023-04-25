@@ -16,7 +16,7 @@ export class LoginComponent {
   formSubmitted: boolean = false;
 
   loginForm: FormGroup = this.formBuilder.group({
-    email: ['pedro@ucol.mx', [Validators.required, Validators.email]],
+    email: [localStorage.getItem('email') || '', [Validators.required, Validators.email]],
     password: ['', Validators.required],
     remember: [false]
   });
@@ -27,6 +27,12 @@ export class LoginComponent {
     this.userService.login(this.loginForm.value).subscribe({
       next: (response) => {
         console.log(response);
+
+        if (this.loginForm.get('remember')?.value) {
+          localStorage.setItem('email', this.loginForm.get('email')?.value);
+        } else {
+          localStorage.removeItem('email');
+        }
       },
       error: ({error}) => {
         Swal.fire('Error', error.message, 'error');
