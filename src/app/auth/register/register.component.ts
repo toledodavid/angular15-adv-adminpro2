@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -30,7 +32,7 @@ export class RegisterComponent {
       this.userService.createUser(this.registerForm.value).subscribe(response => {
         console.log(response);
       }, ({error}) => {
-         console.warn(error.message);
+         Swal.fire('Error', error.message, 'error');
       });
     } else {
       return;
