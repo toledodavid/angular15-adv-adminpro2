@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment.development';
 
@@ -16,11 +17,19 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   createUser(formData: RegisterForm) {
-    return this.http.post(`${base_url}/users`, formData);
+    return this.http.post(`${base_url}/users`, formData).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+      })
+    );
   }
 
   login(formData: LoginForm) {
-    return this.http.post(`${base_url}/login`, formData);
+    return this.http.post(`${base_url}/login`, formData).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+      })
+    );
   }
 
 }
