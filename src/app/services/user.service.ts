@@ -32,4 +32,12 @@ export class UserService {
     );
   }
 
+  loginGoogle(token: string) {
+    return this.http.post(`${base_url}/login/google`, {token}).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+      })
+    );
+  }
+
 }
