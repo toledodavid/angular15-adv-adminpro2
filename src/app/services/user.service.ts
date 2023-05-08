@@ -1,12 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment.development';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { Observable, of } from 'rxjs';
+
+
+
+declare const google: any;
 
 const base_url = environment.base_url;
 
@@ -15,7 +20,16 @@ const base_url = environment.base_url;
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private ngZone: NgZone) { }
+
+  logout() {
+    localStorage.removeItem('token');
+    google.accounts.id.revoke('david_toledo@ucol.mx', () => {
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('/login');
+      });
+    });
+  }
 
   validateToken(): Observable<boolean> {
     const token = localStorage.getItem('token') || '';

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class LoginComponent implements AfterViewInit {
     remember: [false]
   });
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService, private ngZone: NgZone) {}
 
   ngAfterViewInit(): void {
     this.googleInit();
@@ -47,7 +47,9 @@ export class LoginComponent implements AfterViewInit {
     this.userService.loginGoogle(response.credential).subscribe({
       next: (response) => {
         // console.log({login: response});
-        this.router.navigateByUrl('/');
+        this.ngZone.run(() => {
+          this.router.navigateByUrl('/');
+        });
       }
     });
   }
