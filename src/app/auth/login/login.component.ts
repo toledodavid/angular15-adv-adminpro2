@@ -62,12 +62,14 @@ export class LoginComponent implements AfterViewInit {
         } else {
           localStorage.removeItem('email');
         }
+
+        // Navigate to Dashboard
+        this.router.navigateByUrl('/');
       },
       error: ({error}) => {
         Swal.fire('Error', error.message, 'error');
       }
     });
-    // this.router.navigateByUrl('/');
   }
 
 }
