@@ -37,12 +37,12 @@ export class UserService {
   validateToken(): Observable<boolean> {
     const token = localStorage.getItem('token') || '';
     return this.http.get(`${base_url}/login/renew`, {headers: {'x-token': token}}).pipe(
-      tap((response: any) => {
-        const {name, email, img, google,role, uid} = response.user;
+      map((response: any) => {
+        const {name, email, img = '', google,role, uid} = response.user;
         this.user = new User(name, email, '', role, google, img, uid);
         localStorage.setItem('token', response.token);
+        return true;
       }),
-      map(response => true),
       catchError(error => of(false))
     );
   }
