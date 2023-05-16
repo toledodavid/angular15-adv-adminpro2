@@ -45,12 +45,15 @@
 
             <img src="" alt="">
 
-            <input type="file">
+            <input type="file" (change)="changeImage($any($event.target).files[0])">
 
             <br>
             <br>
 
-            <button type="button" class="btn btn-success btn-block waves-effect waves-light">
+            <button type="button"
+                    [disabled]="!imageToUpload"
+                    class="btn btn-success btn-block waves-effect waves-light"
+                    (click)="uploadImage()">
               <i class="fa fa-save"></i>
               Update image
             </button>
