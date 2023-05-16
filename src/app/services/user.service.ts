@@ -25,6 +25,14 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router, private ngZone: NgZone) { }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string {
+    return this.user.uid || '';
+  }
+
   logout() {
     localStorage.removeItem('token');
     google.accounts.id.revoke('david_toledo@ucol.mx', () => {
@@ -35,8 +43,7 @@ export class UserService {
   }
 
   validateToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
-    return this.http.get(`${base_url}/login/renew`, {headers: {'x-token': token}}).pipe(
+    return this.http.get(`${base_url}/login/renew`, {headers: {'x-token': this.token}}).pipe(
       map((response: any) => {
         const {name, email, img = '', google,role, uid} = response.user;
         this.user = new User(name, email, '', role, google, img, uid);
@@ -53,6 +60,14 @@ export class UserService {
         localStorage.setItem('token', response.token);
       })
     );
+  }
+
+  updateProfile(data: {name: string, email: string, role: string | undefined}) {
+    data = {
+      ...data,
+      role: this.user.role
+    }
+    return this.http.put(`${base_url}/users/${this.uid}`, data, {headers: {'x-token': this.token}})
   }
 
   login(formData: LoginForm) {
