@@ -12,6 +12,7 @@ import { ProgressComponent } from "./progress/progress.component";
 import { AccountSettings } from "./account-settings/account-settings.component";
 import { PromisesComponent } from "./promises/promises.component";
 import { RxjsComponent } from "./rxjs/rxjs.component";
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -23,7 +24,8 @@ import { RxjsComponent } from "./rxjs/rxjs.component";
     PagesComponent,
     AccountSettings,
     PromisesComponent,
-    RxjsComponent
+    RxjsComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
