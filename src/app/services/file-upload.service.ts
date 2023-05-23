@@ -32,7 +32,12 @@ export class FileUploadService {
 
       const data = await response.json();
 
-      console.log(data);
+      if (data.ok) {
+        return data.fileName;
+      } else {
+        console.log(data.message);
+        return false;
+      }
 
       return 'Image path';
 

@@ -16,6 +16,8 @@ export class ProfileComponent implements OnInit {
   user!: User;
   imageToUpload!: File;
 
+  imagePreview!: any;
+
   constructor(private formBuilder: FormBuilder, private userService: UserService, private fileUploadService: FileUploadService) {
     this.user =  userService.user;
   }
@@ -38,12 +40,25 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  changeImage(file: File) {
+  changeImage(file: File):any {
     this.imageToUpload = file;
+
+    if (!file) {
+      return this.imagePreview = null;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      this.imagePreview = reader.result;
+    }
   }
 
   uploadImage() {
-    this.fileUploadService.updateImage(this.imageToUpload, 'users', this.user.uid).then(console.log);
+    this.fileUploadService.updateImage(this.imageToUpload, 'users', this.user.uid).then(img => {
+      this.user.img = img;
+    });
   }
 
 }
