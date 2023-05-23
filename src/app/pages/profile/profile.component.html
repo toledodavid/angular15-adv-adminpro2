@@ -24,7 +24,8 @@
                                 class="form-control"
                                 id="exampleInputEmail1"
                                 formControlName="email"
-                                placeholder="Email">
+                                placeholder="Email"
+                                [readOnly]="user.google">
                     </div>
                 </div>
                 <button type="submit" [disabled]="profileForm.invalid" class="btn btn-success btn-block waves-effect waves-light">
