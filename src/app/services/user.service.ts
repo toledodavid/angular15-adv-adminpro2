@@ -8,6 +8,8 @@ import { environment } from '../../environments/environment.development';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
+import { LoadUsers } from '../interfaces/load-users.interface';
+
 import { User } from '../models/user.model';
 
 
@@ -31,6 +33,14 @@ export class UserService {
 
   get uid(): string {
     return this.user.uid || '';
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
   }
 
   logout() {
@@ -84,6 +94,11 @@ export class UserService {
         localStorage.setItem('token', response.token);
       })
     );
+  }
+
+  loadUsers(from: number = 0) {
+    const url = `${base_url}/users?from=${from}`;
+    return this.http.get<LoadUsers>(url, this.headers);
   }
 
 }
