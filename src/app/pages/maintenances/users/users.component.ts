@@ -12,13 +12,31 @@ export class UsersComponent implements OnInit {
 
   totalUsers: number = 0;
   users: User[] = [];
+  from: number = 0;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.loadUsers().subscribe(({users, total}) => {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.userService.loadUsers(this.from).subscribe(({users, total}) => {
       this.totalUsers = total;
       this.users = users;
     });
+  }
+
+  changePage(value: number) {
+    this.from += value;
+
+    if (this.from < 0) {
+      this.from = 0;
+    } else if(this.from > this.totalUsers) {
+      this.from -= value;
+    }
+
+    console.log(this.from);
+    this.loadUsers();
   }
 }
