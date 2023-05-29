@@ -14,6 +14,7 @@ import { AccountSettings } from "./account-settings/account-settings.component";
 import { PromisesComponent } from "./promises/promises.component";
 import { RxjsComponent } from "./rxjs/rxjs.component";
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenances/users/users.component';
 
 
 
@@ -26,7 +27,8 @@ import { ProfileComponent } from './profile/profile.component';
     AccountSettings,
     PromisesComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,
