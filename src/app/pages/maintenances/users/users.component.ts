@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { SearchesService } from '../../../services/searches.service';
+
 import { User } from 'src/app/models/user.model';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -15,7 +18,7 @@ export class UsersComponent implements OnInit {
   from: number = 0;
   loading: boolean = true;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private searchesService: SearchesService) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -41,5 +44,15 @@ export class UsersComponent implements OnInit {
 
     // console.log(this.from);
     this.loadUsers();
+  }
+
+  search(target: string) {
+    if (!target) return;
+
+    this.searchesService.search('users', target).pipe(
+      map(response => response.map((user: User) => new User(user.name, user.email, undefined, user.role, user.google, user.img, user.uid)))
+    ).subscribe(response => {
+      this.users = response;
+    });
   }
 }
