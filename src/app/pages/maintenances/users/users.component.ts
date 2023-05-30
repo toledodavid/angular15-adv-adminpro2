@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
       this.from -= value;
     }
 
-    console.log(this.from);
+    // console.log(this.from);
     this.loadUsers();
   }
 }

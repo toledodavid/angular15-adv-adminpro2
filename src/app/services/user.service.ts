@@ -98,7 +98,14 @@ export class UserService {
 
   loadUsers(from: number = 0) {
     const url = `${base_url}/users?from=${from}`;
-    return this.http.get<LoadUsers>(url, this.headers);
+    return this.http.get<LoadUsers>(url, this.headers).pipe(
+      map(response => {
+        return {
+          ...response,
+          users: response.users.map(user => new User(user.name, user.email, undefined, user.role, user.google, user.img, user.uid))
+        }
+      })
+    );
   }
 
 }
