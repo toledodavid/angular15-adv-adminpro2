@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+
 import { UserService } from '../../../services/user.service';
 import { SearchesService } from '../../../services/searches.service';
 
 import { User } from 'src/app/models/user.model';
-import { map } from 'rxjs';
+
 
 @Component({
   selector: 'app-users',
@@ -56,5 +58,28 @@ export class UsersComponent implements OnInit {
     this.searchesService.search('users', target).subscribe(response => {
       this.users = response;
     });
+  }
+
+  deleteUser(user: User) {
+    Swal.fire({
+      title: 'Delete an user?',
+      text: `You are going to delete to ${user.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.userService.deleteUser(user).subscribe(() => {
+          this.loadUsers();
+          Swal.fire(
+            'Deleted!',
+            `User ${user.name} has been deleted`,
+            'success'
+          );
+        });
+
+      }
+    })
   }
 }
