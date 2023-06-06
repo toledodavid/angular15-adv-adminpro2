@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit {
 
   totalUsers: number = 0;
   users: User[] = [];
+  usersTemp: User[] = [];
   from: number = 0;
   loading: boolean = true;
 
@@ -29,6 +30,7 @@ export class UsersComponent implements OnInit {
     this.userService.loadUsers(this.from).subscribe(({users, total}) => {
       this.totalUsers = total;
       this.users = users;
+      this.usersTemp = users;
       this.loading = false;
     });
   }
@@ -46,12 +48,12 @@ export class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
-  search(target: string) {
-    if (!target) return;
+  search(target: string): any {
+    if (!target) {
+      return this.users = this.usersTemp;
+    }
 
-    this.searchesService.search('users', target).pipe(
-      map(response => response.map((user: User) => new User(user.name, user.email, undefined, user.role, user.google, user.img, user.uid)))
-    ).subscribe(response => {
+    this.searchesService.search('users', target).subscribe(response => {
       this.users = response;
     });
   }

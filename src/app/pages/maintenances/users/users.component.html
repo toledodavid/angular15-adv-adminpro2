@@ -63,8 +63,10 @@
           </table>
         </div>
 
-        <button (click)="changePage(-5)" class="btn btn-secondary mr-2">Previous</button>
-        <button (click)="changePage(5)" class="btn btn-secondary">Next</button>
+        <div *ngIf="txtTarget.value.length === 0">
+          <button (click)="changePage(-5)" class="btn btn-secondary mr-2">Previous</button>
+          <button (click)="changePage(5)" class="btn btn-secondary">Next</button>
+        </div>
 
       </div>
     </div>
