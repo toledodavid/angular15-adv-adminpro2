@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ComponentsModule } from "../components/components.module";
 import { SharedModule } from "../shared/shared.module";
@@ -35,7 +35,8 @@ import { UsersComponent } from './maintenances/users/users.component';
     ReactiveFormsModule,
     SharedModule,
     RouterModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule
   ]
 })
 export class PagesModule {}

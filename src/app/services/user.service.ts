@@ -115,4 +115,8 @@ export class UserService {
     return this.http.delete(url, this.headers);
   }
 
+  saveUser(user: User) {
+    return this.http.put(`${base_url}/users/${user.uid}`, user, this.headers);
+  }
+
 }
