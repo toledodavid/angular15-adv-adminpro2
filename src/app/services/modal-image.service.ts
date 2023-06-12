@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 
@@ -11,9 +11,11 @@ export class ModalImageService {
 
   private _hideModal: boolean = true;
 
-  type!: string;
+  type!: 'users' | 'doctors' | 'hospitals';
   id!: string;
   img!: string;
+
+  newImage: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
