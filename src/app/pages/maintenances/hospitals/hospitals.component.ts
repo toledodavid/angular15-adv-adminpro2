@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { HospitalService } from "../../../services/hospital.service";
 
 
 @Component({
@@ -6,6 +7,16 @@ import { Component } from "@angular/core";
   templateUrl: './hospitals.component.html',
   styles: []
 })
-export class HospitalsComponent {
+export class HospitalsComponent implements OnInit {
 
+  constructor(private hospitalService: HospitalService) {}
+
+  ngOnInit(): void {
+    this.hospitalService.loadHospitals().subscribe({
+      next: (hospitals) => {
+        console.log(hospitals);
+      },
+      error: (error) => console.log(error)
+    });
+  }
 }
