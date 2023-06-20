@@ -33,7 +33,7 @@
 
           <div class="col">
             <div class="text-right">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" (click)="openCreateHospitalSwalModal()">
                 <i class="fa fa-hospital-o"></i>
                 Create hospital
               </button>
@@ -47,7 +47,7 @@
                 <tr>
                   <th class="w100">Image</th>
                   <th>Name</th>
-                  <th class="text-nowrap">Action</th>
+                  <th class="text-nowrap w100">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,14 +55,26 @@
                   <td class="text-center">
                     <img [src]="hospital.img | image:'hospitals'"
                         [alt]="hospital.name"
-                        class="avatar cursor-pointer">
+                        class="avatar cursor-pointer"
+                        (click)="openModalImage(hospital)">
                   </td>
                   <td>
                     <input type="text" class="form-control" [(ngModel)]="hospital.name" placeholder="Hospital name">
                   </td>
                   <td class="text-nowrap text-center">
-                      <a href="#" data-toggle="tooltip" data-original-title="Save changes"> <i class="fa fa-floppy-o text-inverse m-r-10"></i> </a>
-                      <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
+                      <a (click)="saveChanges(hospital)"
+                          class="cursor-pointer"
+                          data-toggle="tooltip"
+                          data-original-title="Save changes">
+                            <i class="fa fa-floppy-o text-inverse m-r-10"></i>
+                      </a>
+
+                      <a (click)="deleteHospital(hospital)"
+                          class="cursor-pointer"
+                          data-toggle="tooltip"
+                          data-original-title="Delete">
+                            <i class="fa fa-close text-danger"></i>
+                      </a>
                   </td>
                 </tr>
               </tbody>

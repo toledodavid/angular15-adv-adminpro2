@@ -1,6 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription, delay } from "rxjs";
+import Swal from "sweetalert2";
 import { HospitalService } from "../../../services/hospital.service";
+import { ModalImageService } from "../../../services/modal-image.service";
 import { Hospital } from "../../../models/hospital.model";
+
 
 
 @Component({
@@ -8,15 +12,21 @@ import { Hospital } from "../../../models/hospital.model";
   templateUrl: './hospitals.component.html',
   styles: []
 })
-export class HospitalsComponent implements OnInit {
+export class HospitalsComponent implements OnInit, OnDestroy {
 
   hospitals: Hospital[] = [];
   loading: boolean = true;
+  imgSubscription!: Subscription;
 
-  constructor(private hospitalService: HospitalService) {}
+  constructor(private hospitalService: HospitalService, private modalImageService: ModalImageService) {}
 
   ngOnInit(): void {
     this.loadHospitals();
+    this.imgSubscription = this.modalImageService.newImage.pipe(delay(100)).subscribe(img => this.loadHospitals());
+  }
+
+  ngOnDestroy(): void {
+    this.imgSubscription.unsubscribe();
   }
 
   loadHospitals() {
@@ -29,5 +39,39 @@ export class HospitalsComponent implements OnInit {
       },
       error: (error) => console.warn(error)
     });
+  }
+
+  saveChanges(hospital: Hospital) {
+    this.hospitalService.updateHospital(hospital._id, hospital.name).subscribe(response => {
+      console.log(response);
+      Swal.fire('Saved', hospital.name, 'success');
+    });
+  }
+
+  deleteHospital(hospital: Hospital) {
+    this.hospitalService.deleteHospital(hospital._id).subscribe(response => {
+      console.log(response);
+      this.loadHospitals();
+      Swal.fire('Deleted', hospital.name, 'success');
+    });
+  }
+
+  async openCreateHospitalSwalModal() {
+    const { value } = await Swal.fire({
+      input: 'text',
+      title: 'Create hospital',
+      inputPlaceholder: 'Enter the hospital name',
+      showCancelButton: true,
+    })
+
+    if (value?.trim().length > 0) {
+      this.hospitalService.createHospital(value).subscribe((response: any) => {
+        this.hospitals.push(response.hospital);
+      });
+    }
+  }
+
+  openModalImage(hospital: Hospital) {
+    this.modalImageService.openModal('hospitals', hospital._id, hospital.img);
   }
 }
