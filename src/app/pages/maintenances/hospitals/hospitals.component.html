@@ -3,7 +3,11 @@
       <div class="card">
           <div class="card-body">
 
-            <input type="text" class="form-control" placeholder="Search hospital...">
+            <input type="text"
+                    class="form-control"
+                    placeholder="Search hospital..."
+                    (keyup)="search(txtTarget.value)"
+                    #txtTarget>
 
           </div>
       </div>
@@ -55,7 +59,7 @@
                   <td class="text-center">
                     <img [src]="hospital.img | image:'hospitals'"
                         [alt]="hospital.name"
-                        class="avatar cursor-pointer"
+                        class="w-100 cursor-pointer"
                         (click)="openModalImage(hospital)">
                   </td>
                   <td>

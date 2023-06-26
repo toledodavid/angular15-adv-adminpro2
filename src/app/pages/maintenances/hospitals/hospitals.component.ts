@@ -3,6 +3,8 @@ import { Subscription, delay } from "rxjs";
 import Swal from "sweetalert2";
 import { HospitalService } from "../../../services/hospital.service";
 import { ModalImageService } from "../../../services/modal-image.service";
+import { SearchesService } from "../../../services/searches.service";
+
 import { Hospital } from "../../../models/hospital.model";
 
 
@@ -15,10 +17,11 @@ import { Hospital } from "../../../models/hospital.model";
 export class HospitalsComponent implements OnInit, OnDestroy {
 
   hospitals: Hospital[] = [];
+  hospitalsTemp: Hospital[] = [];
   loading: boolean = true;
   imgSubscription!: Subscription;
 
-  constructor(private hospitalService: HospitalService, private modalImageService: ModalImageService) {}
+  constructor(private hospitalService: HospitalService, private modalImageService: ModalImageService, private searchesService: SearchesService) {}
 
   ngOnInit(): void {
     this.loadHospitals();
@@ -36,6 +39,7 @@ export class HospitalsComponent implements OnInit, OnDestroy {
       next: (hospitals) => {
         this.loading = false;
         this.hospitals = hospitals;
+        this.hospitalsTemp = hospitals;
       },
       error: (error) => console.warn(error)
     });
@@ -73,5 +77,15 @@ export class HospitalsComponent implements OnInit, OnDestroy {
 
   openModalImage(hospital: Hospital) {
     this.modalImageService.openModal('hospitals', hospital._id, hospital.img);
+  }
+
+  search(target: string): any {
+    if (!target) {
+      return this.hospitals = this.hospitalsTemp;
+    }
+
+    this.searchesService.search('hospitals', target).subscribe((response: Hospital[]) => {
+      this.hospitals = response;
+    });
   }
 }
