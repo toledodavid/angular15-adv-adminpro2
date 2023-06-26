@@ -30,12 +30,12 @@
           <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Image</th>
+                  <th class="w100">Image</th>
                   <th>Email</th>
                   <th>Name</th>
                   <th>Role</th>
                   <th>Auth</th>
-                  <th class="text-nowrap">Action</th>
+                  <th class="w100 text-nowrap">Action</th>
                 </tr>
               </thead>
               <tbody>
