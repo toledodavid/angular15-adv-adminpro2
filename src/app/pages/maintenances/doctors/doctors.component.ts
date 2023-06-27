@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, delay } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { DoctorService } from '../../../services/doctor.service';
 import { ModalImageService } from '../../../services/modal-image.service';
 import { SearchesService } from '../../../services/searches.service';
 import { Doctor } from '../../../models/doctor.model';
+
 
 
 
@@ -55,5 +57,28 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.searchesService.search('doctors', target).subscribe((response: Doctor[]) => {
       this.doctors = response;
     });
+  }
+
+  deleteDoctor(doctor: Doctor) {
+    Swal.fire({
+      title: 'Delete doctor?',
+      text: `You are going to delete to doctor ${doctor.name}`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.doctorService.deleteDoctor(doctor._id).subscribe(() => {
+          this.loadDoctors();
+          Swal.fire(
+            'Deleted!',
+            `User ${doctor.name} has been deleted`,
+            'success'
+          );
+        });
+
+      }
+    })
   }
 }

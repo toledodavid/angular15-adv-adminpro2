@@ -46,7 +46,7 @@ export class DoctorService {
     return this.http.put(url, doctor, this.headers);
   }
 
-  deleteDoctor(_id: string) {
+  deleteDoctor(_id: string | undefined) {
     const url = `${base_url}/doctors/${_id}`;
     return this.http.delete(url, this.headers);
   }
