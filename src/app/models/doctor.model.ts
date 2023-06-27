@@ -8,10 +8,10 @@ interface _DoctorUser {
 
 export class Doctor {
   constructor(
-    name: string,
-    _id?: string,
-    img?: string,
-    user?: _DoctorUser,
-    hospital?: Hospital
+    public name: string,
+    public _id?: string,
+    public img?: string,
+    public user?: _DoctorUser,
+    public hospital?: Hospital
   ){}
 }
