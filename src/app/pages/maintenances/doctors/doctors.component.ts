@@ -73,7 +73,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
           this.loadDoctors();
           Swal.fire(
             'Deleted!',
-            `User ${doctor.name} has been deleted`,
+            `Doctor ${doctor.name} has been deleted`,
             'success'
           );
         });
