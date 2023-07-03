@@ -18,17 +18,23 @@ export class DoctorComponent implements OnInit {
 
   hospitals?: Hospital [] = [];
 
+  hospitalSelected?: Hospital;
+
   constructor(private formBuilder: FormBuilder, private hospitalService: HospitalService) {}
 
   ngOnInit(): void {
     this.loadHospitals();
+    this.doctorForm.get('hospital')?.valueChanges.subscribe({
+      next: (hospitalId) => {
+        this.hospitalSelected = this.hospitals?.find(hospital => hospital._id === hospitalId);
+      }
+    });
   }
 
   loadHospitals() {
     this.hospitalService.loadHospitals().subscribe({
       next: (hospitals: Hospital[]) => {
         this.hospitals = hospitals;
-        console.log(this.hospitals);
       }
     });
   }
