@@ -36,7 +36,7 @@ export class DoctorService {
     );
   }
 
-  createDoctor(doctor: Doctor) {
+  createDoctor(doctor: {name: string, hospital: string}) {
     const url = `${base_url}/doctors`;
     return this.http.post(url, doctor, this.headers);
   }
