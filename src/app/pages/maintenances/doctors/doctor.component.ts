@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
@@ -28,15 +28,29 @@ export class DoctorComponent implements OnInit {
   hospitalSelected?: Hospital;
   doctorSelected?: Doctor;
 
-  constructor(private formBuilder: FormBuilder, private hospitalService: HospitalService, private doctorService: DoctorService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder,
+              private hospitalService: HospitalService,
+              private doctorService: DoctorService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(({id}) => {
+      this.loadDoctor(id);
+    });
+
     this.loadHospitals();
     this.doctorForm.get('hospital')?.valueChanges.subscribe({
       next: (hospitalId) => {
         this.hospitalSelected = this.hospitals?.find(hospital => hospital._id === hospitalId);
       }
     });
+  }
+
+  loadDoctor(id: string) {
+    this.doctorService.getDoctorById(id).subscribe(doctor => {
+      this.doctorSelected = doctor;
+    })
   }
 
   loadHospitals() {
