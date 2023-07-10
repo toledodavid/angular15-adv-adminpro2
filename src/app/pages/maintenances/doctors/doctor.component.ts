@@ -48,8 +48,16 @@ export class DoctorComponent implements OnInit {
   }
 
   loadDoctor(id: string) {
+    if (id === 'new') {
+      return;
+    }
     this.doctorService.getDoctorById(id).subscribe(doctor => {
+
+      if (!doctor) {
+        return this.router.navigateByUrl(`/dashboard/doctors`);
+      }
       this.doctorSelected = doctor;
+      return this.doctorForm.setValue({name: doctor.name, hospital: doctor.hospital?._id});
     })
   }
 
@@ -62,12 +70,24 @@ export class DoctorComponent implements OnInit {
   }
 
   saveDoctor() {
+
     const {name} = this.doctorForm.value;
-    this.doctorService.createDoctor(this.doctorForm.value).subscribe((response: any) => {
-      console.log(response);
-      Swal.fire('Created', `Doctor ${name} created successfuly`, 'success');
-      this.router.navigateByUrl(`/dashboard/doctor/${response.doctor._id}`);
-    });
+
+    if (this.doctorSelected) {
+      const data = {
+        ...this.doctorForm.value,
+        _id: this.doctorSelected._id
+      }
+      this.doctorService.updateDoctor(data).subscribe(response => {
+       Swal.fire('Updated', `Doctor ${name} updated successfuly`, 'success');
+      });
+    } else {
+      this.doctorService.createDoctor(this.doctorForm.value).subscribe((response: any) => {
+        console.log(response);
+        Swal.fire('Created', `Doctor ${name} created successfuly`, 'success');
+        this.router.navigateByUrl(`/dashboard/doctor/${response.doctor._id}`);
+      });
+    }
   }
 
 }
