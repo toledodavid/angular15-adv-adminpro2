@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs';
 
 import Swal from 'sweetalert2';
 
@@ -51,7 +52,7 @@ export class DoctorComponent implements OnInit {
     if (id === 'new') {
       return;
     }
-    this.doctorService.getDoctorById(id).subscribe(doctor => {
+    this.doctorService.getDoctorById(id).pipe(delay(100)).subscribe(doctor => {
 
       if (!doctor) {
         return this.router.navigateByUrl(`/dashboard/doctors`);
