@@ -4,13 +4,13 @@
       <div class="card-body">
         <h3>Users</h3>
 
-        <div class="alert alert-info">
+        <div *ngIf="users.length === 0" class="alert alert-info animated fadeIn fast">
           <p class="mb-0">
             No users with that term
           </p>
         </div>
 
-        <div class="table-responsive">
+        <div *ngIf="users.length > 0" class="table-responsive">
           <table class="table">
             <thead>
               <tr>
@@ -19,9 +19,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Deshmukh</td>
-                <td>Prohaska</td>
+              <tr *ngFor="let user of users" class="animated fadeIn fast">
+                <td>
+                  <img [src]="user.img | image:'users'" class="avatar">
+                </td>
+                <td>{{user.name}}</td>
               </tr>
             </tbody>
           </table>
@@ -36,13 +38,13 @@
       <div class="card-body">
         <h3>Doctors</h3>
 
-        <div class="alert alert-info">
+        <div *ngIf="doctors.length === 0" class="alert alert-info animated fadeIn fast">
           <p class="mb-0">
             No doctors with that term
           </p>
         </div>
 
-        <div class="table-responsive">
+        <div *ngIf="doctors.length > 0" class="table-responsive">
           <table class="table">
             <thead>
               <tr>
@@ -51,9 +53,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Deshmukh</td>
-                <td>Prohaska</td>
+              <tr *ngFor="let doctor of doctors" class="animated fadeIn fast">
+                <td>
+                  <img [src]="doctor.img | image:'doctors'" class="avatar">
+                </td>
+                <td>
+                  <a [routerLink]="['/dashboard/doctor/', doctor._id]">{{doctor.name}}</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -69,13 +75,13 @@
       <div class="card-body">
         <h3>Hospitals</h3>
 
-        <div class="alert alert-info">
+        <div *ngIf="hospitals.length === 0" class="alert alert-info animated fadeIn fast">
           <p class="mb-0">
             No hospitals with that term
           </p>
         </div>
 
-        <div class="table-responsive">
+        <div *ngIf="hospitals.length > 0" class="table-responsive">
           <table class="table">
             <thead>
               <tr>
@@ -84,9 +90,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Deshmukh</td>
-                <td>Prohaska</td>
+              <tr *ngFor="let hospital of hospitals" class="animated fadeIn fast">
+                <td>
+                  <img [src]="hospital.img | image:'hospitals'" class="w75">
+                </td>
+                <td>{{hospital.name}}</td>
               </tr>
             </tbody>
           </table>

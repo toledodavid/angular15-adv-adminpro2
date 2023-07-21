@@ -29,6 +29,11 @@ export class SearchesService {
     };
   }
 
+  globalSearch(term: string) {
+    const url = `${base_url}/all/${term}`;
+    return this.http.get<any[]>(url, this.headers);
+  }
+
   search(collectionName: 'users' | 'doctors' | 'hospitals', target: string): Observable<any[]> {
     const url = `${base_url}/all/collection/${collectionName}/${target}`;
     return this.http.get<any[]>(url, this.headers).pipe(
