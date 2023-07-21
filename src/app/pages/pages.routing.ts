@@ -15,6 +15,7 @@ import { UsersComponent } from "./maintenances/users/users.component";
 import { HospitalsComponent } from "./maintenances/hospitals/hospitals.component";
 import { DoctorsComponent } from "./maintenances/doctors/doctors.component";
 import { DoctorComponent } from "./maintenances/doctors/doctor.component";
+import { SearchComponent } from "./search/search.component";
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'promises', component: PromisesComponent, data: { title: 'Promises' } },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' } },
       { path: 'profile', component: ProfileComponent, data: { title: 'My profile'} },
+      { path: 'search/:term', component: SearchComponent, data: { title: 'Searches'} },
 
       //Maintenances
       { path: 'users', component: UsersComponent, data: { title: 'Users' } },
