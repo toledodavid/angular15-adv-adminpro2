@@ -35,6 +35,10 @@ export class UserService {
     return this.user.uid || '';
   }
 
+  get role (): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role || 'USER_ROLE';
+  }
+
   get headers() {
     return {
       headers: {
@@ -43,8 +47,14 @@ export class UserService {
     };
   }
 
+  saveLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     google.accounts.id.revoke('david_toledo@ucol.mx', () => {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
@@ -57,7 +67,8 @@ export class UserService {
       map((response: any) => {
         const {name, email, img = '', google,role, uid} = response.user;
         this.user = new User(name, email, '', role, google, img, uid);
-        localStorage.setItem('token', response.token);
+
+        this.saveLocalStorage(response.token, response.menu);
         return true;
       }),
       catchError(error => of(false))
@@ -67,7 +78,7 @@ export class UserService {
   createUser(formData: RegisterForm) {
     return this.http.post(`${base_url}/users`, formData).pipe(
       tap((response: any) => {
-        localStorage.setItem('token', response.token);
+        this.saveLocalStorage(response.token, response.menu);
       })
     );
   }
@@ -83,7 +94,7 @@ export class UserService {
   login(formData: LoginForm) {
     return this.http.post(`${base_url}/login`, formData).pipe(
       tap((response: any) => {
-        localStorage.setItem('token', response.token);
+        this.saveLocalStorage(response.token, response.menu);
       })
     );
   }
@@ -91,7 +102,7 @@ export class UserService {
   loginGoogle(token: string) {
     return this.http.post(`${base_url}/login/google`, {token}).pipe(
       tap((response: any) => {
-        localStorage.setItem('token', response.token);
+        this.saveLocalStorage(response.token, response.menu);
       })
     );
   }

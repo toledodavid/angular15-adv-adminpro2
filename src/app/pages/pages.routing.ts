@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { AuthGuard } from "../guards/auth.guard";
+import { AdminGuard } from "../guards/admin.guard";
 
 import { AccountSettings } from "./account-settings/account-settings.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
@@ -34,10 +35,12 @@ const routes: Routes = [
       { path: 'search/:term', component: SearchComponent, data: { title: 'Searches'} },
 
       //Maintenances
-      { path: 'users', component: UsersComponent, data: { title: 'Users' } },
       { path: 'hospitals', component: HospitalsComponent, data: { title: 'Hospitals' } },
       { path: 'doctors', component: DoctorsComponent, data: { title: 'Doctors' } },
-      { path: 'doctor/:id', component: DoctorComponent, data: { title: 'Doctor' } }
+      { path: 'doctor/:id', component: DoctorComponent, data: { title: 'Doctor' } },
+
+      // Admin routes
+      { path: 'users', canActivate: [AdminGuard], component: UsersComponent, data: { title: 'Users' } },
     ]
   },
 ];
